@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<style>
+#showcart {
+    background-image: url('download.png') no-repeat top left;
+    width: 60px;
+    height: 30px;
+    padding: 2px 3px;
+}
+
+</style>
+
+</head>
+<body>
+
+ <div>
+     <h2>Add item</h2>
+     <input type="number" id="itemid" placeholder="item id">
+     <input type="text"   id="name"   placeholder="name">
+     <input type="text"    id="item" placeholder="item">
+     <input type="number"  id="quantity"  placeholder="quantity">
+     <input type="price"   id="price"  placeholder="price">
+     <input type="button"  value="add" onclick="additem()">
+ </div> 
+ 
+ <div>
+        <h2>Update item</h2>
+        <input type="number" id="uid" placeholder="item id">
+        <input type="text"   id="uname"   placeholder="name">
+        <input type="text"    id="uitem" placeholder="item">
+        <input type="number"  id="uquantity"  placeholder="quantity">
+        <input type="price"   id="uprice"  placeholder="price">
+        <input type="button"  value="update" onclick="updateitem()">
+    </div>  
+    <br>
+    <br>
+    <input type="text" id="sname" placeholder="search">
+    <input type="button" value="searchitem" onclick="searchitem()">
+
+    <input type="button" value="showallitem" onclick="showitem()">
+    <div id="showitem">
+        
+    </div>
+
+    <div>
+        <br>
+        <input type="button" id="showcart"   value="" onclick="showcartdetails()" />
+    </div>
+
+    
+</body>
+<script>
+    function showitem(){
+        const url = 'http://localhost:1230/product'
+      fetch(url)
+      .then(res=>res.json())
+      .then(data=>{
+          let row = ''
+          data.allproduct.forEach(p => { 
+
+            row += `<tr>
+                <td>${p.id}</td>
+                <td>${p.name}</td>
+                <td>${p.item}</td>
+                <td>${p.quantity}</td>
+                <td>${p.price}</td>
+            </tr>`
+              
+          });
+          let table = `<table>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>item</th>
+                <th>quantity</th>
+                <th>price</th>
+            </tr>
+            ${row}
+           </table>`
+           document.getElementById('showitem').innerHTML = table;
+      })
+    }
+
+    
+
+    function additem(){
+
+        let _url = 'http://localhost:1230/product/register'
+      fetch(_url,{
+          method:'POST',
+          headers:{
+              'content-type' : 'application/json'
+          },
+          body:JSON.stringify({
+            id: document.getElementById('itemid').value,
+             name: document.getElementById('name').value,
+             item: document.getElementById('item').value,
+             quantity: document.getElementById('quantity').value,
+             price: document.getElementById('price').value
+
+          })
+      }).then(res=>res.json())
+      
+
+    }
+
+     function updateitem(){
+       
+        let _url = 'http://localhost:1230/product/update'
+      fetch(_url,{
+          method:'POST',
+          headers:{
+              'content-type' : 'application/json'
+          },
+          body:JSON.stringify({
+            id: document.getElementById('uid').value,
+             name: document.getElementById('uname').value,
+             item: document.getElementById('uitem').value,
+             quantity: document.getElementById('uquantity').value,
+             price: document.getElementById('uprice').value
+
+          })
+      }).then(res=>res.json())
+      
+
+     }
+
+
+     function cQuantity(operator,totalprice){ 
+        
+         let quantity = parseInt(document.getElementById('itemSize').innerText);
+         if(operator == 'DEC' ){
+             if(quantity == 0 ){
+                 quantity = 0;
+             }else {
+             quantity = quantity-1;
+             }
+         }else if(operator == 'POS'){
+             quantity = quantity+1;
+         }
+    
+     document.getElementById('itemSize').innerText = quantity;
+     document.getElementById('tp').innerText = calculateprice(totalprice,quantity);
+
+
+        }
+
+       function  calculateprice(totalprice,quantity){
+
+        return totalprice*quantity;
+
+        }
+function addtocart(aid,aname,aitem){
+
+    localStorage.setItem(aid,JSON.stringify({
+
+        id: aid,
+        name: aname,
+        item: aitem,
+        quantity: parseInt(document.getElementById('itemSize').innerText),
+        totalprice: parseInt(document.getElementById('tp').innerText)
+    })
+    )
+}
+     
+
+     function searchitem(){
+        let url = "http://localhost:1230/product/search"
+
+fetch(url,{
+          method:'POST',
+          headers:{
+              'content-type' : 'application/json'
+          },
+          body:JSON.stringify({
+              name: document.getElementById('sname').value
+          })
+        }).then(res=>res.json())
+        .then(data=>{
+        
+            let row = ''
+          data.searchproduct.forEach(p =>{ 
+
+            row += `<tr>
+                <td>${p.id}</td>
+                <td>${p.name}</td>
+                <td>${p.item}</td>
+                <td><input type="button" value="-"  id="neg" onclick="cQuantity('DEC',${p.price})" /> <span id="itemSize"> 0 </span> <input type="button" value="+" id="pos" onclick="cQuantity('POS',${p.price})" /> </td>
+                <td>${p.price}</td>
+                <td><span id="tp"></span></td>
+                <td><input type="button" value="AddToCart" id="addtocart" onclick="addtocart(${p.id},'${p.name}','${p.item}')" /></td>  
+            </tr>`
+          });
+
+          let table = `<table>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>item</th>
+                <th>quantity</th>
+                <th>price</th>
+                <th>total price</th>
+            </tr>
+            ${row}
+           </table>`
+           document.getElementById('showitem').innerHTML = table;
+      })
+
+     }
+
+
+
+
+
+     function cartQuantity(operator,totalprice,i){ 
+        
+        let quantity = parseInt(document.getElementById(`itemSize${i}`).innerText);
+        let sum = parseInt(document.getElementById('sumprice').innerText);
+        if(operator == 'DEC' ){
+            if(quantity == 0 ){
+                quantity = 0;
+            }else {
+            quantity = quantity-1;
+            sum = sum - totalprice;
+
+            }
+        }else if(operator == 'POS'){
+            quantity = quantity+1;
+            sum = sum + totalprice;
+        }
+   
+    document.getElementById(`itemSize${i}`).innerText = quantity;
+    document.getElementById(`tp${i}`).innerText = calculateprice(totalprice,quantity);
+    document.getElementById('sumprice').innerText = sum;
+
+
+       }
+
+      function  calculateprice(totalprice,quantity){
+
+       return totalprice*quantity;
+
+       }
+function sendEmail(){
+    let name = document.getElementById('sendusername').value;
+    let email = document.getElementById('sendemail').value;
+    let detail = []
+
+    Object.keys(localStorage).forEach(k=>{
+        const values = JSON.parse(localStorage.getItem(k));
+        detail.push(values);
+    });
+ 
+
+    let row=''
+    detail.forEach(e=>{
+        row+=`<tr>
+               <td>${e.id}</td>
+               <td>${e.name}</td>
+               <td>${e.item}</td>
+               <td>${e.quantity}</td>
+               <td>${e.totalprice}</td>
+               </tr>`
+    })
+
+    let table = `<table>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>item</th>
+                <th>quantity</th>
+                <th>price</th>
+            </tr>
+            ${row}
+            </table>`
+      
+
+
+  let  url= "http://localhost:1230/product/email"
+  fetch(url,{ method:'POST',
+          headers:{
+              'content-type' : 'application/json'
+          },
+          body: JSON.stringify({
+                name: name,
+                email: email,
+                table: table
+          })
+
+  }).then(res=>res.json())
+}
+
+function payment(){
+   
+
+     
+    let table=`<table border='1.0'>
+                <tr>
+               <th>Name:<th>
+                <th><input type="text" id="sendusername" placeholder="username" /></th>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <th><input type="email" id="sendemail" placeholder="email" /></th>
+                </tr>
+                <tr><input type="button" value="sendReciept" onclick="sendEmail()" /></tr>
+                    </table>`
+                    document.getElementById('showitem').innerHTML=table;
+
+}
+
+
+
+     function showcartdetails(){
+    let cartdetail = [];
+    let sumprice = 0;
+
+Object.keys(localStorage).forEach(e=>{
+    const cart = JSON.parse(localStorage.getItem(e));
+    sumprice+=cart.totalprice;
+    cartdetail.push(cart);
+})
+
+let row=''
+let i=0;
+cartdetail.forEach(p=>{
+    row+=`<tr>
+            <td>${p.id}</td>
+                <td>${p.name}</td>
+                <td>${p.item}</td>
+                <td><input type="button" value="-" id="${i+1}" onclick="cartQuantity('DEC',${p.totalprice/p.quantity},${i+1})" /><span id="itemSize${i+1}">${p.quantity}</span> <input type="button" value="+" id="${i+1}" onclick="cartQuantity('POS',${p.totalprice/p.quantity},${i+1})" /> </td>
+                <td><span id="tp${i+1}">${p.totalprice}</span></td>
+            </tr>`
+     
+            i=i+1;
+        
+})
+
+
+let table = `<table>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>item</th>
+                <th>quantity</th>
+                <th>price</th>
+            </tr>
+            ${row}
+            <tr>
+                <th> total price </th>
+                <td id="sumprice">${sumprice}</td>
+                <td><input type="button" value="payment" onclick="payment()" /></td>
+                </tr>
+           </table>`
+           document.getElementById('showitem').innerHTML = table;
+
+}
+
+</script>
+</html>
