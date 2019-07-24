@@ -10,9 +10,13 @@
     body {
         background: url('images.jpg') no-repeat ;
     }
+
+    #sI{
+        color: aqua;
+    }
 #showcart {
     background-image: url('download.png') no-repeat top left;
-    width: 60px;
+    width: 70px;
     height: 30px;
     padding: 2px 3px;
 }
@@ -27,6 +31,10 @@
 tr,td ,th   {
     border: 2px solid  black
 }
+#heading {
+    color: aquamarine;
+}
+
 
 </style>
 
@@ -55,10 +63,11 @@ tr,td ,th   {
     </div>  
     <br>
     <br>
+    <h2 id="sI">Search Item</h2>
     <input type="text" id="sname" placeholder="search">
     <input type="button" class="btn btn-danger" value="searchitem" onclick="searchitem()">
 
-    <input type="button" class="btn btn-info" value="showallitem" onclick="showitem()">
+    <input type="button" class="btn btn-info" value="showallitem" onclick="showitem()"><br>
     <div id="showitem">
         
     </div>
@@ -89,7 +98,7 @@ tr,td ,th   {
               
           });
           let table = `<table>
-            <tr>
+            <tr id="heading">
                 <th>id</th>
                 <th>name</th>
                 <th>item</th>
@@ -122,7 +131,7 @@ tr,td ,th   {
           })
       }).then(res=>res.json())
       
-
+    showitem();
     }
 
      function updateitem(){
@@ -214,7 +223,7 @@ fetch(url,{
             </tr>`
           });
 
-          let table = `<table>
+          let table = `<table class="table table-bordered table-dark">
             <tr>
                 <th>id</th>
                 <th>name</th>
