@@ -10,4 +10,4 @@ server.use(cors())
 
 server.use('/product',productRoute)
 
-server.listen(1230, ()=> console.log(" Server is running "))
+server.listen(1240, ()=> console.log(" Server is running "))

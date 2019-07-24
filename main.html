@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Document</title>
 <style>
+    body {
+        background: url('images.jpg') no-repeat ;
+    }
 #showcart {
     background-image: url('download.png') no-repeat top left;
     width: 60px;
@@ -15,9 +18,11 @@
 }
 .jumbotron {
     background-color: aqua;
+    opacity: 0.9;
 }
 .jum {
     background-color: rgb(101, 103, 194);
+    opacity: 0.9;
 }
 tr,td ,th   {
     border: 2px solid  black
@@ -60,14 +65,14 @@ tr,td ,th   {
 
     <div>
         <br>
-        <input type="button" id="showcart" class="btn btn-primary"  value="" onclick="showcartdetails()" />
+        <input type="button" id="showcart" class="btn btn-primary"  value="showcart" onclick="showcartdetails()" />
     </div>
 
 </div>
 </body>
 <script>
     function showitem(){
-        const url = 'http://localhost:1230/product'
+        const url = 'http://localhost:1240/product'
       fetch(url)
       .then(res=>res.json())
       .then(data=>{
@@ -75,11 +80,11 @@ tr,td ,th   {
           data.allproduct.forEach(p => { 
 
             row += `<tr>
-                <td>${p.id}</td>
-                <td>${p.name}</td>
-                <td>${p.item}</td>
-                <td>${p.quantity}</td>
-                <td>${p.price}</td>
+                <td class="bg-primary">${p.id}</td>
+                <td class="bg-success">${p.name}</td>
+                <td class="bg-info">${p.item}</td>
+                <td class="bg-danger">${p.quantity}</td>
+                <td class="bg-warning">${p.price}</td>
             </tr>`
               
           });
@@ -101,7 +106,7 @@ tr,td ,th   {
 
     function additem(){
 
-        let _url = 'http://localhost:1230/product/register'
+        let _url = 'http://localhost:1240/product/register'
       fetch(_url,{
           method:'POST',
           headers:{
@@ -122,7 +127,7 @@ tr,td ,th   {
 
      function updateitem(){
        
-        let _url = 'http://localhost:1230/product/update'
+        let _url = 'http://localhost:1240/product/update'
       fetch(_url,{
           method:'POST',
           headers:{
@@ -182,7 +187,7 @@ function addtocart(aid,aname,aitem){
      
 
      function searchitem(){
-        let url = "http://localhost:1230/product/search"
+        let url = "http://localhost:1240/product/search"
 
 fetch(url,{
           method:'POST',
@@ -293,7 +298,7 @@ function sendEmail(sum){
       
 
 
-  let  url= "http://localhost:1230/product/email"
+  let  url= "http://localhost:1240/product/email"
   fetch(url,{ method:'POST',
           headers:{
               'content-type' : 'application/json'
