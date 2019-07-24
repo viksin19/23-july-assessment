@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Document</title>
 <style>
 #showcart {
@@ -12,47 +13,57 @@
     height: 30px;
     padding: 2px 3px;
 }
+.jumbotron {
+    background-color: aqua;
+}
+.jum {
+    background-color: rgb(101, 103, 194);
+}
+tr,td ,th   {
+    border: 2px solid  black
+}
 
 </style>
 
 </head>
 <body>
+   <div class="container">
 
- <div>
+ <div class="jumbotron">
      <h2>Add item</h2>
      <input type="number" id="itemid" placeholder="item id">
      <input type="text"   id="name"   placeholder="name">
      <input type="text"    id="item" placeholder="item">
      <input type="number"  id="quantity"  placeholder="quantity">
      <input type="price"   id="price"  placeholder="price">
-     <input type="button"  value="add" onclick="additem()">
+     <input type="button" class="btn btn-info" value="add" onclick="additem()">
  </div> 
  
- <div>
+ <div class="jum">
         <h2>Update item</h2>
         <input type="number" id="uid" placeholder="item id">
         <input type="text"   id="uname"   placeholder="name">
         <input type="text"    id="uitem" placeholder="item">
         <input type="number"  id="uquantity"  placeholder="quantity">
         <input type="price"   id="uprice"  placeholder="price">
-        <input type="button"  value="update" onclick="updateitem()">
+        <input type="button" class="btn btn-success" value="update" onclick="updateitem()">
     </div>  
     <br>
     <br>
     <input type="text" id="sname" placeholder="search">
-    <input type="button" value="searchitem" onclick="searchitem()">
+    <input type="button" class="btn btn-danger" value="searchitem" onclick="searchitem()">
 
-    <input type="button" value="showallitem" onclick="showitem()">
+    <input type="button" class="btn btn-info" value="showallitem" onclick="showitem()">
     <div id="showitem">
         
     </div>
 
     <div>
         <br>
-        <input type="button" id="showcart"   value="" onclick="showcartdetails()" />
+        <input type="button" id="showcart" class="btn btn-primary"  value="" onclick="showcartdetails()" />
     </div>
 
-    
+</div>
 </body>
 <script>
     function showitem(){
