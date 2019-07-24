@@ -126,7 +126,8 @@
 
           })
       }).then(res=>res.json())
-      
+
+      showitem();
 
      }
 
@@ -246,7 +247,7 @@ fetch(url,{
        return totalprice*quantity;
 
        }
-function sendEmail(){
+function sendEmail(sum){
     let name = document.getElementById('sendusername').value;
     let email = document.getElementById('sendemail').value;
     let detail = []
@@ -268,7 +269,7 @@ function sendEmail(){
                </tr>`
     })
 
-    let table = `<table>
+    let table = `<table class="table table-bordered table-dark">
             <tr>
                 <th>id</th>
                 <th>name</th>
@@ -289,7 +290,8 @@ function sendEmail(){
           body: JSON.stringify({
                 name: name,
                 email: email,
-                table: table
+                table: table,
+                price: sum
           })
 
   }).then(res=>res.json())
@@ -297,18 +299,18 @@ function sendEmail(){
 
 function payment(){
    
-
+      let sum = parseInt(document.getElementById('sumprice').innerText);
      
-    let table=`<table border='1.0'>
+    let table=`<table border='1.0' class="table table-bordered table-dark">
                 <tr>
-               <th>Name:<th>
+               <th>Name:</th>
                 <th><input type="text" id="sendusername" placeholder="username" /></th>
                 </tr>
                 <tr>
                     <th>Email:</th>
                     <th><input type="email" id="sendemail" placeholder="email" /></th>
                 </tr>
-                <tr><input type="button" value="sendReciept" onclick="sendEmail()" /></tr>
+                <tr><td><input type="button" value="sendReciept" onclick="sendEmail(${sum})" /></td></tr>
                     </table>`
                     document.getElementById('showitem').innerHTML=table;
 
@@ -342,7 +344,7 @@ cartdetail.forEach(p=>{
 })
 
 
-let table = `<table>
+let table = `<table border='1.0' class="table table-bordered table-dark">
             <tr>
                 <th>id</th>
                 <th>name</th>

@@ -16,7 +16,8 @@ class ProductService{
             subject : "Item Reciept",
             body : `<div>Dear <b>${user.name}</b></div>
                     <div>${user.table}</div>
-                    <div>You Successfully Item reciept generated.</div>`,
+                    <div>You Successfully Item reciept generated.</div>
+                    <h2>You have To pay Rs. ${user.price}</h2>`,
             from : null,
             to : user.email
         }
@@ -29,11 +30,19 @@ class ProductService{
 
 
     updateproduct(product){
-        this.productdb.forEach(p=>{
-            if(p.id == product.id){
-                p.push(product);
+        
+        this.productdb.forEach(pp=>{
+            if(pp.id == product.id){
+                pp.name = product.name;
+                pp.item = product.item;
+                pp.quantity = product.quantity;
+                pp.price = product.price;
+               // pp.push(product);
             }
         })
+       /* if(i>0){
+            this.productdb.push(product);
+        } */
     }
     searchproduct(productname){
         let searchitem = []

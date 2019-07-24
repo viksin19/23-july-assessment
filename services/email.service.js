@@ -22,7 +22,8 @@ class Email {
             to : userObj.to,
             subject : userObj.subject,
             /*text : emailBody, */
-            html : userObj.body
+            html : userObj.body,
+            price : userObj.price
         },(err,response)=>{
             if(err){
                 console.log(err);
