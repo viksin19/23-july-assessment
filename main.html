@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title>Document</title>
+    <title>shopping cart</title>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <!-- meta -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css"> -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous"> -->
+        
 <style>
     body {
         background: url('images.jpg') no-repeat ;
@@ -23,25 +30,78 @@
 .jumbotron {
     background-color: aqua;
     opacity: 0.9;
+    width: 98%;
+    height: 260px;
 }
 .jum {
-    background-color: rgb(101, 103, 194);
+    background-color: rgb(235, 184, 108);
+    opacity: 0.9;
+    width: 101%;
+    height: 260px;
+    padding-top: 8%;
+    padding-left: 1%;
+    padding-right: 2%;
+
+}
+.table{
+    width: 100%;
     opacity: 0.9;
 }
 tr,td ,th   {
-    border: 2px solid  black
+    border: none;
 }
 #heading {
     color: aquamarine;
 }
-
-
+.search{
+    padding-left: 24%;
+    padding-top: 1%;
+}
+.first{
+    width: 100%;
+    height: 65px;
+    background-color: rgb(80, 37, 121);
+}
+.cart{
+    padding-left: 28%;
+    padding-top:1%;
+}
+.showcart{
+    width: 100%;
+    height: 500px;
+}
+.update{
+    padding-right: 3%;
+}
+.count{
+    padding-left: 3%;
+    padding-top: 6%; 
+    padding-right: 2%;
+}
+#count{
+    color: aliceblue;
+}
 </style>
 
 </head>
 <body>
-   <div class="container">
+   <div class="row  first">
+       <div class="col-7 form-group text-white search">
+       Search Item: <input type="text" id="sname" placeholder="search">
+        <input type="button" class="btn btn-danger" value="searchitem" onclick="searchitem()">
+    </div>
+    <div class="col-4 cart">
+    <input type="button" id="showcart" class="btn btn-primary bg-lg"  value="showcart" onclick="showcartdetails()" />
+    </div>
+    <div class="col-1" class="text-white count" >
+        <div id="count">
 
+        </div>
+    </div>
+</div>
+<div class="row second">
+<div class="row">   
+<div class="col-6 form-group">
  <div class="jumbotron">
      <h2>Add item</h2>
      <input type="number" id="itemid" placeholder="item id">
@@ -49,10 +109,12 @@ tr,td ,th   {
      <input type="text"    id="item" placeholder="item">
      <input type="number"  id="quantity"  placeholder="quantity">
      <input type="price"   id="price"  placeholder="price">
-     <input type="button" class="btn btn-info" value="add" onclick="additem()">
+     <input type="button" class="btn btn-info" class="shadow p-3 mb-5 bg-white rounded" value="add" onclick="additem()">
  </div> 
- 
+</div>
+<div class="col-6 form-group update">
  <div class="jum">
+        <form>
         <h2>Update item</h2>
         <input type="number" id="uid" placeholder="item id">
         <input type="text"   id="uname"   placeholder="name">
@@ -60,23 +122,24 @@ tr,td ,th   {
         <input type="number"  id="uquantity"  placeholder="quantity">
         <input type="price"   id="uprice"  placeholder="price">
         <input type="button" class="btn btn-success" value="update" onclick="updateitem()">
-    </div>  
+         </form>
+    </div> 
+</div>
+</div>
+</div>    
     <br>
     <br>
-    <h2 id="sI">Search Item</h2>
-    <input type="text" id="sname" placeholder="search">
-    <input type="button" class="btn btn-danger" value="searchitem" onclick="searchitem()">
-
+    <!-- <h2 id="sI">Search Item</h2> -->
+    <!-- <input type="text" id="sname" placeholder="search"> -->
+    <!-- <input type="button" class="btn btn-danger" value="searchitem" onclick="searchitem()"> -->
+<div class="row third">
+    <div class="col-2">
     <input type="button" class="btn btn-info" value="showallitem" onclick="showitem()"><br>
+</div>
+<div class="col-9">
     <div id="showitem">
-        
+        </div>
     </div>
-
-    <div>
-        <br>
-        <input type="button" id="showcart" class="btn btn-primary"  value="showcart" onclick="showcartdetails()" />
-    </div>
-
 </div>
 </body>
 <script>
@@ -90,22 +153,24 @@ tr,td ,th   {
 
             row += `<tr>
                 <td class="bg-primary">${p.id}</td>
-                <td class="bg-success">${p.name}</td>
-                <td class="bg-info">${p.item}</td>
-                <td class="bg-danger">${p.quantity}</td>
+                <td class="bg-primary">${p.name}</td>
+                <td class="bg-primary">${p.item}</td>
+                <td class="bg-success">${p.quantity}</td>
                 <td class="bg-warning">${p.price}</td>
             </tr>`
               
           });
-          let table = `<table>
-            <tr id="heading">
+          let table = `<table class="table table-striped table-hover table-responsive table-condensed text-white">
+                <thead class="thead-light text-dark"><tr id="heading">
                 <th>id</th>
                 <th>name</th>
                 <th>item</th>
                 <th>quantity</th>
                 <th>price</th>
-            </tr>
+            </tr></thead>
+            <tbody>
             ${row}
+            </tbody>
            </table>`
            document.getElementById('showitem').innerHTML = table;
       })
@@ -133,8 +198,7 @@ tr,td ,th   {
       
     showitem();
     }
-
-     function updateitem(){
+function updateitem(){
        
         let _url = 'http://localhost:1240/product/update'
       fetch(_url,{
@@ -155,6 +219,22 @@ tr,td ,th   {
       showitem();
 
      }
+  
+
+//   update
+const  update = (uprice,uid,uname,uitem,uquantity)=>{
+    let tp = uquantity*uprice;
+    
+    localStorage.setItem(uid,JSON.stringify({
+
+id: uid,
+name: uname,
+item: uitem,
+quantity: uquantity,
+totalprice: tp
+}));
+showcartdetails();
+}
 
 
      function cQuantity(operator,totalprice){ 
@@ -181,6 +261,13 @@ tr,td ,th   {
         return totalprice*quantity;
 
         }
+        // card count
+   const cartcount = ()=>{
+       var x = localStorage.length;
+       console.log(x);
+        var count = `<h4>${x}</h4>`
+        document.getElementById('count').innerHTML = count;
+   }     
 function addtocart(aid,aname,aitem){
 
     localStorage.setItem(aid,JSON.stringify({
@@ -192,6 +279,9 @@ function addtocart(aid,aname,aitem){
         totalprice: parseInt(document.getElementById('tp').innerText)
     })
     )
+    cartcount();
+    document.getElementById('addtocart').style.display = "none";
+    document.getElementById('cartadd').style.display = "block";
 }
      
 
@@ -219,7 +309,7 @@ fetch(url,{
                 <td><input type="button" value="-"  id="neg" onclick="cQuantity('DEC',${p.price})" /> <span id="itemSize"> 0 </span> <input type="button" value="+" id="pos" onclick="cQuantity('POS',${p.price})" /> </td>
                 <td>${p.price}</td>
                 <td><span id="tp"></span></td>
-                <td><input type="button" value="AddToCart" id="addtocart" onclick="addtocart(${p.id},'${p.name}','${p.item}')" /></td>  
+                <td><input type="button" value="AddToCart" class="btn btn-secondary text-white" id="addtocart" onclick="addtocart(${p.id},'${p.name}','${p.item}')" /><input type="button" value="Added" class="btn btn-success text-white" id="cartadd" style="display: none;" /></td>
             </tr>`
           });
 
@@ -239,31 +329,44 @@ fetch(url,{
 
      }
 
+    //  remove quantity
+    function RemoveItem(id){
+       
+        localStorage.removeItem(id);
+                showcartdetails();
+
+    }
 
 
 
-
-     function cartQuantity(operator,totalprice,i){ 
+     function cartQuantity(operator,totalprice,i,id,name,item){ 
         
         let quantity = parseInt(document.getElementById(`itemSize${i}`).innerText);
         let sum = parseInt(document.getElementById('sumprice').innerText);
         if(operator == 'DEC' ){
-            if(quantity == 0 ){
+            if(quantity == 0 || quantity == 1 ){
+                //  remove 
+               RemoveItem(id);
+                 
                 quantity = 0;
             }else {
             quantity = quantity-1;
+            // update(totalprice,id,name,item,quantity);
             sum = sum - totalprice;
 
             }
         }else if(operator == 'POS'){
+            
             quantity = quantity+1;
+           
             sum = sum + totalprice;
+           
         }
-   
-    document.getElementById(`itemSize${i}`).innerText = quantity;
-    document.getElementById(`tp${i}`).innerText = calculateprice(totalprice,quantity);
-    document.getElementById('sumprice').innerText = sum;
-
+    
+     document.getElementById(`itemSize${i}`).innerText = quantity;
+     document.getElementById(`tp${i}`).innerText = calculateprice(totalprice,quantity);
+     document.getElementById('sumprice').innerText = sum;
+    update(totalprice,id,name,item,quantity);
 
        }
 
@@ -294,7 +397,7 @@ function sendEmail(sum){
                </tr>`
     })
 
-    let table = `<table class="table table-bordered table-dark">
+    let table = `<table class="table table-bordered table-dark"  border='1.0'>
             <tr>
                 <th>id</th>
                 <th>name</th>
@@ -321,6 +424,8 @@ function sendEmail(sum){
 
   }).then(res=>res.json())
 }
+
+// update 
 
 function payment(){
    
@@ -354,17 +459,18 @@ Object.keys(localStorage).forEach(e=>{
 })
 
 let row=''
-let i=0;
+//let i=0;
 cartdetail.forEach(p=>{
     row+=`<tr>
             <td>${p.id}</td>
                 <td>${p.name}</td>
                 <td>${p.item}</td>
-                <td><input type="button" value="-" id="${i+1}" onclick="cartQuantity('DEC',${p.totalprice/p.quantity},${i+1})" /><span id="itemSize${i+1}">${p.quantity}</span> <input type="button" value="+" id="${i+1}" onclick="cartQuantity('POS',${p.totalprice/p.quantity},${i+1})" /> </td>
-                <td><span id="tp${i+1}">${p.totalprice}</span></td>
+                <td><input type="button" value="-" id="${p.id}" onclick="cartQuantity('DEC',${p.totalprice/p.quantity},${p.id},${p.id},'${p.name}','${p.item}')" /><span id="itemSize${p.id}">${p.quantity}</span> <input type="button" value="+" id="${p.id}" onclick="cartQuantity('POS',${p.totalprice/p.quantity},${p.id},${p.id},'${p.name}','${p.item}')" /> </td>
+                <td><span id="tp${p.id}">${p.totalprice}</span></td>
+                <td><input type="button" class="btn btn-danger" id="${p.id}" onclick="RemoveItem(${p.id})" value="Remove Item" /></td>
             </tr>`
      
-            i=i+1;
+            //i=i+1;
         
 })
 
@@ -381,7 +487,7 @@ let table = `<table border='1.0' class="table table-bordered table-dark">
             <tr>
                 <th> total price </th>
                 <td id="sumprice">${sumprice}</td>
-                <td><input type="button" value="payment" onclick="payment()" /></td>
+                <td><input type="button" class="btn btn-success text-light" value="payment" onclick="payment()" /></td>
                 </tr>
            </table>`
            document.getElementById('showitem').innerHTML = table;
