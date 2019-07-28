@@ -33,6 +33,7 @@ class ProductService{
         
         this.productdb.forEach(pp=>{
             if(pp.id == product.id){
+                pp.image = product.image;
                 pp.name = product.name;
                 pp.item = product.item;
                 pp.quantity = product.quantity;
