@@ -1,12 +1,11 @@
 const nodemailer = require('nodemailer');
-const utils = require('./utils').utils;
 class Email {
     constructor(){
         this.smtpSetup = {
-            service : utils.smtp.provider,
+            service : 'gmail',
             auth :{
-                user : utils.smtp.address,
-                pass : utils.smtp.password
+                user : 'ibmtechtraining007@gmail.com',
+                pass : 'India@786'
             }
         }
         // configure the smtp settings
@@ -15,7 +14,7 @@ class Email {
     email(userObj){
         // in case sender isnt mentioned
         if(userObj.from == null){
-            userObj.from = utils.smtp.address;
+            userObj.from = 'ibmtechtraining007@gmail.com';
         }
         this.mailer.sendMail({
             from : userObj.from,

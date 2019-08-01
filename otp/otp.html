@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Otp</title>
+
+    <!-- Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<style>
+.first{
+    background-color: rgb(54, 52, 52);
+    width: 120%;
+    height: 60px;
+}
+#first{
+    color: blanchedalmond;
+    padding-left: 38%;
+    padding-top: 1%;
+}
+
+.three{
+    width: 100%;
+    height: 100px;
+}
+.four{
+width: 100%;
+height: 50px;
+padding-left: 45%;
+padding-top: 28%;
+}
+.register{
+    padding-left: 47%;
+    padding-top: 20%;
+    width: 50%;
+}
+body{
+    background: url('flight.jpg') no-repeat;
+    background-attachment: fixed;
+    width: 100%;
+    height: 700px;
+}
+h2{
+    padding-left: 34%;
+    padding-top: 3%;
+    color: rgb(48, 59, 5);
+    opacity: 0.9;
+}
+</style>
+</head>
+<body>
+    <div class="row first">
+        <h4 id="first">TRAVELHELPer</h4>
+    </div>
+    <div class="row second">
+        <div class="row register">
+        <!-- Button trigger modal -->
+<button type="button" class="btn btn-success btn-lg" data-toggle="modal" data-target="#exampleModal">
+        Register
+      </button>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Register Here</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                    <form>
+                            <div class="form-group">
+                                    <input type="text" class="form-control" id="username" aria-describedby="userHelp" placeholder="Enter Name">
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputEmail1">Email address</label>
+                              <input type="email" class="form-control" id="useremail" aria-describedby="emailHelp" placeholder="Enter email">
+                              <small id="emailHelp" class="form-text text-muted">e.g abc@xyz.com.</small>
+                            </div>
+                            
+                            <div class="form-group form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Remember Me</label>
+                            </div>
+                    </form>
+                    <div class="otp" id="otp" style="display : none; ">
+                        <form>
+                                <div class="form-group">
+                                        <input type="text" class="form-control" id="userOTP" aria-describedby="OTPHelp" placeholder="OTP">
+                                </div>
+                                <div class="form-group">
+                                        <input type="password" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Create Password">
+                                </div>
+                                <div class="form-group">
+                                        <input type="password" class="form-control" id="confirmpassword" aria-describedby="passwordHelp" placeholder="Confirm Password">
+                                </div>
+                        </form>
+                    </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="verify" class="btn btn-success" data-dismiss="modal" onclick="verify()" style="display: none;">Verify</button>
+              <button type="button" id="generateotp" class="btn btn-primary" onclick="generate()">Generate OTP</button>
+            </div>
+          </div>
+        
+      </div>
+    </div>
+    </div>
+</div>
+    
+</body>
+
+<script>
+function generate(){
+   const url='http://localhost:5000/user/register'
+   let name = document.getElementById('username').value;
+   let email = document.getElementById('useremail').value;
+   fetch(url,{
+       method: 'POST',
+       headers:{
+           'content-type':'application/json'
+       },
+       body: JSON.stringify({
+           name : name,
+           email: email
+       })
+   }).then(res=>res.json())
+   .then(data=>{
+       console.log(data);
+   })
+
+   document.getElementById('otp').style.display = "block";
+   document.getElementById('verify').style.display = "block";
+   document.getElementById('generateotp').style.display = "none";
+
+}
+function verify(){
+
+const url = 'http://localhost:5000/user/verify'
+let _otp = document.getElementById('userOTP').value;
+let pass = document.getElementById('password').value;
+let confirmpass = document.getElementById('confirmpassword').value;
+if(pass == confirmpass){
+    fetch(url,{
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+            otp: _otp,
+            password: pass
+
+        })
+    }).then(res=>res.json())
+    .then(data=>{
+        console.log(data);
+        alert(data.message);
+
+    })
+}else{
+    alert('Password Not Matched');
+}
+
+}
+
+</script>
+
+</html>
